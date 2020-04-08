@@ -32,6 +32,9 @@ import {
   TEN_TO_THE_EIGHTEENTH_POWER,
   BUY,
   ZERO,
+  DAI,
+  REP,
+  ETHER,
 } from 'modules/common/constants';
 import { TestNetReputationToken } from '@augurproject/core/build/libraries/GenericContractInterfaces';
 import { CreateMarketData, LiquidityOrder } from 'modules/types';
@@ -318,6 +321,12 @@ export async function uniswapEthForRepRate(wei: BigNumber): Promise<BigNumber> {
 
 export async function uniswapRepForEthRate(rep: BigNumber): Promise<BigNumber> {
   return new BigNumber(100);
+}
+
+export async function getRepRate(): Promise<BigNumber> {
+  const { uniswap, contracts } = augurSdk.get();
+  const rate = await uniswap.getExchangeRate(contracts.reputationToken.address, contracts.cash.address);
+  return rate;
 }
 
 export function getEthForDaiRate(): BigNumber {

@@ -74,6 +74,7 @@ import { loadAccountData } from 'modules/auth/actions/load-account-data';
 import { wrapLogHandler } from './wrap-log-handler';
 import { updateUniverse } from 'modules/universe/actions/update-universe';
 import { getEthToDaiRate } from 'modules/app/actions/get-ethToDai-rate';
+import { getRepToDaiRate } from 'modules/app/actions/get-repToDai-rate';
 import { registerUserDefinedGasPriceFunction } from 'modules/app/actions/register-user-defined-gasPrice-function';
 
 const handleAlert = (
@@ -198,8 +199,9 @@ export const handleNewBlockLog = (log: Events.NewBlock) => async (
       loadAnalytics(getState().analytics, blockchain.currentAugurTimestamp)
     );
   }
-  // update ethToDaiRate/gasPrice each block
+  // update ETH/REP rate and gasPrice each block
   dispatch(getEthToDaiRate());
+  dispatch(getRepToDaiRate());
   dispatch(registerUserDefinedGasPriceFunction());
 
   if (log.logs && log.logs.length > 0){
